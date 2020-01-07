@@ -1,42 +1,53 @@
 CREATE TABLE member (
-    mb_code        NUMBER(20),
-    mb_id            VARCHAR2(20 BYTE),
-    mb_name       VARCHAR2(20 BYTE),
-    mb_pwd         VARCHAR2(20 BYTE),
-    mb_birthdate  DATE,
-    mb_sex           VARCHAR2(20 BYTE),
-    mb_phone      NUMBER(20),
-    mb_email        VARCHAR2(20 BYTE),
-    mb_signin       DATE,
-    mb_signout     DATE,
-    mb_temppwd  VARCHAR2(20 BYTE),
-    mb_host         CHAR(1),
-    mb_profile      VARCHAR2(100 BYTE),
-    mb_grade       VARCHAR2(10 BYTE),
-    CONSTRAINT member_PRIMARY_KEY PRIMARY KEY(mb_code)
+    mb_id              VARCHAR2(20 BYTE),
+    mb_name         VARCHAR2(20 BYTE),
+    mb_pwd           VARCHAR2(150 BYTE),
+    mb_birthdate    DATE,
+    mb_sex             CHAR(1),
+    mb_phone        NUMBER(13),
+    mb_email          VARCHAR2(30 BYTE),
+    mb_join_date     DATE,
+    mb_delete_date  DATE,
+    mb_temppwd     VARCHAR2(150 BYTE),
+    mb_profile         VARCHAR2(100 BYTE),
+    mb_grade          VARCHAR2(10 BYTE),
+    CONSTRAINT member_PRIMARY_KEY PRIMARY KEY(mb_id )
+);
+
+CREATE TABLE host (
+    ho_code          NUMBER(2),
+    mb_id             VARCHAR2(20 BYTE),
+    ho_address      VARCHAR2(100 BYTE),
+    ho_add_detail   VARCHAR2(100 BYTE),
+    ho_add_post     NUMBER(5),
+    ho_account      VARCHAR2(20 BYTE),
+    ho_acc_num      VARCHAR2(30 BYTE),
+    CONSTRAINT host_PRIMARY_KEY PRIMARY KEY(mb_id),
+    CONSTRAINT host_FOREIGN_KEY FOREIGN KEY (mb_id ) REFERENCES member(mb_id )
 );
 
 CREATE TABLE accommodation (
+    mb_id                    VARCHAR2(20 BYTE),
     acm_code               NUMBER(20),
     acm_img                 VARCHAR2(100 BYTE),
-    acm_info                 VARCHAR2(1000 BYTE),
-    acm_rule                  VARCHAR2(1000 BYTE),
-    acm_charge              NUMBER(10),
-    acm_availdate           DATE,
-    acm_checkin_time     DATE,
-    acm_checkout_time   DATE,
-    acm_type                 VARCHAR2(20 BYTE),
-    acm_room_type        VARCHAR2(20 BYTE),
+    acm_info                 VARCHAR2(2000 BYTE),
+    acm_rule                  VARCHAR2(40 BYTE),
+    acm_charge              NUMBER(7),
+    acm_availdate           VARCHAR2(1000 BYTE),
+    acm_checkin_time     VARCHAR2(10 BYTE),
+    acm_checkout_time   VARCHAR2(10 BYTE),
+    acm_type                 VARCHAR2(10 BYTE),
+    acm_room_type        VARCHAR2(10 BYTE),
     acm_guest_num        NUMBER(2),
     acm_room_num         NUMBER(2),
     acm_bath_num          NUMBER(2),
-    acm_area                  NUMBER,
-    acm_min_date           NUMBER,
-    acm_bedding             VARCHAR2(10 BYTE),
+    acm_area                  NUMBER(3,1),
+    acm_bedding             VARCHAR2(20 BYTE),
     ACM_ADDRESS           VARCHAR2(50),
     ACM_ADD_DETAIL       VARCHAR2(50),
     ACM_TITLE                  VARCHAR2(50),
-    CONSTRAINT accommodation_PRIMARY_KEY PRIMARY KEY(acm_code)
+    CONSTRAINT accommodation_PRIMARY_KEY PRIMARY KEY(acm_code),
+    CONSTRAINT accommodation_FOREIGN_KEY FOREIGN KEY (mb_id ) REFERENCES host(mb_id )
 );
 
 CREATE TABLE amenity (
@@ -64,90 +75,70 @@ CREATE TABLE amenity (
 );
 
 CREATE TABLE cs (
-    admin_code    NUMBER(20),
-    mb_code       NUMBER(20),
+    cs_code          NUMBER(20),
+    admin_id       VARCHAR2(20 BYTE),
+    MB_ID           VARCHAR2(20 BYTE),
     cs_que           VARCHAR2(1000 BYTE),
     cs_ans           VARCHAR2(1000 BYTE),
     cs_que_date   DATE,
     cs_ans_date   DATE,
     cs_complete   CHAR(1),
-    CONSTRAINT cs_FOREIGN_KEY_1 FOREIGN KEY (admin_code) REFERENCES member(mb_code),
-    CONSTRAINT cs_FOREIGN_KEY_2 FOREIGN KEY (mb_code) REFERENCES member(mb_code)
+    CONSTRAINT cs_primary_key PRIMARY KEY(cs_code),
+    CONSTRAINT cs_FOREIGN_KEY_1 FOREIGN KEY (admin_id) REFERENCES member(mb_id),
+    CONSTRAINT cs_FOREIGN_KEY_2 FOREIGN KEY (mb_id) REFERENCES member(mb_id)
 );
 
 CREATE TABLE event (
-    admin_code   NUMBER(20),
-    ev_title          VARCHAR2(30 BYTE),
-    ev_content    VARCHAR2(300 BYTE),
+    ev_code          NUMBER(20),
+    admin_id       VARCHAR2(20 BYTE),
+    ev_title          VARCHAR2(50 BYTE),
+    ev_content    VARCHAR2(2000 BYTE),
     ev_date        DATE,
-    CONSTRAINT event_FOREIGN_KEY FOREIGN KEY (admin_code) REFERENCES member(mb_code)
-);
-
-CREATE TABLE host (
-    ho_code          NUMBER(20),
-    mb_code         NUMBER(20),
-    ho_address      VARCHAR2(50 BYTE),
-    ho_add_detail   VARCHAR2(50 BYTE),
-    ho_account      VARCHAR2(20 BYTE),
-    ho_acc_num      VARCHAR2(30 BYTE),
-    acm_code1       NUMBER(20),
-    acm_code2       NUMBER(20),
-    acm_code3       NUMBER(20),
-    CONSTRAINT host_PRIMARY_KEY PRIMARY KEY(ho_code),
-    CONSTRAINT host_FOREIGN_KEY_1 FOREIGN KEY (mb_code) REFERENCES member(mb_code),
-    CONSTRAINT host_FOREIGN_KEY_2 FOREIGN KEY (acm_code1) REFERENCES accommodation(acm_code),
-    CONSTRAINT host_FOREIGN_KEY_3 FOREIGN KEY (acm_code2) REFERENCES accommodation(acm_code),
-    CONSTRAINT host_FOREIGN_KEY_4 FOREIGN KEY (acm_code3) REFERENCES accommodation(acm_code)
-);
-
-CREATE TABLE message (
-    mb_code              NUMBER(20),
-    acm_code             NUMBER(20),
-    msg_content         VARCHAR2(200 BYTE),
-    msg_send_date      DATE,
-    msg_receive_date   DATE,
-    msg_is_read          CHAR(1),
-    CONSTRAINT message_FOREIGN_KEY_1 FOREIGN KEY (mb_code) REFERENCES member(mb_code),
-    CONSTRAINT message_FOREIGN_KEY_2 FOREIGN KEY (acm_code) REFERENCES accommodation(acm_code)
+    CONSTRAINT event_primary_key PRIMARY KEY(ev_code),
+    CONSTRAINT event_FOREIGN_KEY FOREIGN KEY (admin_id) REFERENCES member(mb_id)
 );
 
 CREATE TABLE notice (
-    admin_code   NUMBER(20),
-    no_title         VARCHAR2(30 BYTE),
-    no_content    VARCHAR2(300 BYTE),
+    no_code        NUMBER(20),
+    admin_id       VARCHAR2(20 BYTE),
+    no_title         VARCHAR2(50 BYTE),
+    no_content    VARCHAR2(2000 BYTE),
     no_date        DATE,
-    CONSTRAINT notice_FOREIGN_KEY FOREIGN KEY (admin_code) REFERENCES member(mb_code)
+    CONSTRAINT notice_primary_key PRIMARY KEY(no_code),
+    CONSTRAINT notice_FOREIGN_KEY FOREIGN KEY (admin_id) REFERENCES member(mb_id)
 );
 
 CREATE TABLE QnA (
-    admin_code    NUMBER(20),
-    qna_title         VARCHAR2(100 BYTE),
+    qna_code        NUMBER(20),
+    admin_id        VARCHAR2(20 BYTE),
+    qna_title         VARCHAR2(50 BYTE),
     qna_content    VARCHAR2(2000 BYTE),
-    CONSTRAINT QnA_FOREIGN_KEY FOREIGN KEY (admin_code) REFERENCES member(mb_code)
+    CONSTRAINT QnA_primary_key PRIMARY KEY(qna_code),
+    CONSTRAINT QnA_FOREIGN_KEY FOREIGN KEY (admin_id) REFERENCES member(mb_id)
 );
 
 CREATE TABLE reservation (
-    res_code            NUMBER,
-    mb_code             NUMBER(20),
+    res_code            NUMBER(20),
+    mb_id                VARCHAR2(20 BYTE),
     acm_code            NUMBER(20),
     res_pay_method    VARCHAR2(20 BYTE),
-    res_amount          NUMBER,
+    res_amount          NUMBER(8),
     res_pay_date        DATE,
-    res_guest_num       NUMBER,
+    res_guest_num       NUMBER(3),
     res_checkin_date    DATE,
     res_checkout_date   DATE,
     res_confirm         CHAR(1),
     CONSTRAINT reservation_PRIMARY_KEY PRIMARY KEY(res_code),
-    CONSTRAINT reservation_FOREIGN_KEY_1 FOREIGN KEY (mb_code) REFERENCES member(mb_code),
+    CONSTRAINT reservation_FOREIGN_KEY_1 FOREIGN KEY (mb_id) REFERENCES member(mb_id),
     CONSTRAINT reservation_FOREIGN_KEY_2 FOREIGN KEY (acm_code) REFERENCES accommodation(acm_code)
 );
 
 CREATE TABLE review (
     acm_code        NUMBER(20),
-    mb_code         NUMBER(20),
+    mb_id             VARCHAR2(20 BYTE),
     rev_comment   VARCHAR2(300 BYTE),
-    rev_img          VARCHAR2(300 BYTE),
+    rev_img          VARCHAR2(100 BYTE),
     rev_star           NUMBER(1, 1),
-    CONSTRAINT review_FOREIGN_KEY_1 FOREIGN KEY (mb_code) REFERENCES member(mb_code),
+    CONSTRAINT review_FOREIGN_KEY_1 FOREIGN KEY (mb_id) REFERENCES member(mb_id),
     CONSTRAINT review_FOREIGN_KEY_2 FOREIGN KEY (acm_code) REFERENCES accommodation(acm_code)
 );
