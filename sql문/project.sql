@@ -45,10 +45,15 @@ CREATE TABLE accommodation (
     acm_bedding             VARCHAR2(20 BYTE),
     ACM_ADDRESS           VARCHAR2(50),
     ACM_ADD_DETAIL       VARCHAR2(50),
+    ACM_ZIP		number(10),		***********추가해야 됨***********************
     ACM_TITLE                  VARCHAR2(50),
     CONSTRAINT accommodation_PRIMARY_KEY PRIMARY KEY(acm_code),
     CONSTRAINT accommodation_FOREIGN_KEY FOREIGN KEY (mb_id ) REFERENCES host(mb_id )
 );
+
+****************************숙소추가 시 시쿼스 생성************************************************************
+create SEQUENCE PP_SEQ NOCACHE;
+****************************숙소추가 시 시쿼스 생성************************************************************
 
 CREATE TABLE amenity (
     acm_code           NUMBER(20),
