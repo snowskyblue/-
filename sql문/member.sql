@@ -12,3 +12,5 @@ create table MEMBER (
     mb_profile varchar2(100),
     mb_grade varchar2(10)
 );
+
+alter table member modify(mb_birthdate varchar2(10));
