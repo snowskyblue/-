@@ -29,9 +29,7 @@ CREATE TABLE host (
 CREATE TABLE accommodation (
     mb_id                    VARCHAR2(20 BYTE),
     acm_code               NUMBER(20),
-    acm_img                 VARCHAR2(100 BYTE),
     acm_info                 VARCHAR2(2000 BYTE),
-    acm_rule                  VARCHAR2(40 BYTE),
     acm_charge              NUMBER(7),
     acm_availdate           VARCHAR2(1000 BYTE),
     acm_checkin_time     VARCHAR2(10 BYTE),
@@ -43,17 +41,25 @@ CREATE TABLE accommodation (
     acm_bath_num          NUMBER(2),
     acm_area                  NUMBER(3,1),
     acm_bedding             VARCHAR2(20 BYTE),
-    ACM_ADDRESS           VARCHAR2(50),
+    ACM_ADDRESS           VARCHAR2(100),		***********크기늘려줘야함***********************
     ACM_ADD_DETAIL       VARCHAR2(50),
     ACM_ZIP		number(10),		***********추가해야 됨***********************
     ACM_TITLE                  VARCHAR2(50),
     CONSTRAINT accommodation_PRIMARY_KEY PRIMARY KEY(acm_code),
-    CONSTRAINT accommodation_FOREIGN_KEY FOREIGN KEY (mb_id ) REFERENCES host(mb_id )
+    CONSTRAINT accommodation_FOREIGN_KEY FOREIGN KEY (mb_id ) REFERENCES host(mb_id )	***********아직은 빼고 테스트해주세요**********************
 );
 
 ****************************숙소추가 시 시쿼스 생성************************************************************
 create SEQUENCE PP_SEQ NOCACHE;
 ****************************숙소추가 시 시쿼스 생성************************************************************
+
+****************************테이블 추가************************************************************
+CREATE TABLE ACM_SUB (
+    acm_code  NUMBER(20),
+    acm_rule varchar(20),
+    acm_amenity varchar(20)
+);
+****************************테이블 추가************************************************************
 
 CREATE TABLE amenity (
     acm_code           NUMBER(20),
