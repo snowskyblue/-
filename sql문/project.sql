@@ -26,6 +26,17 @@ CREATE TABLE host (
     CONSTRAINT host_FOREIGN_KEY FOREIGN KEY (mb_id ) REFERENCES member(mb_id )
 );
 
+/*********************************host table 연습용***************************************/
+CREATE TABLE host (
+    mb_id            VARCHAR2(20 BYTE),
+    ho_address      VARCHAR2(100 BYTE),
+    ho_add_detail   VARCHAR2(100 BYTE),
+    ho_zip		number(10),
+    ho_account      VARCHAR2(20 BYTE),
+    ho_acc_num      VARCHAR2(30 BYTE)
+);
+/*********************************host table 연습용***************************************/
+
 CREATE TABLE accommodation (
     mb_id                    VARCHAR2(20 BYTE),
     acm_code               NUMBER(20),
