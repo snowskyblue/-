@@ -1,0 +1,16 @@
+create table CS (
+    cs_code number(4) primary key,
+    mb_name varchar2(20) not null,
+    mb_id varchar2(20) not null,
+    cs_title varchar2(20) not null,
+    cs_content varchar2(2000) not null,
+    cs_date date default sysdate not null,
+    cs_group number(4),
+    cs_complete char(1) not null,
+    CONSTRAINT cs_FOREIGN_KEY_2 FOREIGN KEY (mb_id) REFERENCES member(mb_id)
+);
+
+
+create sequence cs_seq nocache;
+
+commit;
