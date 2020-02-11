@@ -2,7 +2,7 @@ create table MEMBER (
     mb_id varchar2(20) primary key,
     mb_pwd varchar2(150) not null,
     mb_name varchar2(20) not null,
-    mb_birthdate varchar2(8) not null,
+    mb_birthdate varchar2(10) not null,
     mb_sex char(1) not null,
     mb_email varchar2(50) not null,
     mb_phone varchar2(11) not null,
