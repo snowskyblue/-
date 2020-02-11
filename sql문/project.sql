@@ -60,6 +60,9 @@ CREATE TABLE accommodation (
     CONSTRAINT accommodation_FOREIGN_KEY FOREIGN KEY (mb_id ) REFERENCES host(mb_id )	***********아직은 빼고 테스트해주세요**********************
 );
 
+alter table accommodation 
+add (acm_thumbnail varchar2(100));
+
 ****************************숙소추가 시 시쿼스 생성************************************************************
 create SEQUENCE PP_SEQ NOCACHE;
 ****************************숙소추가 시 시쿼스 생성************************************************************
