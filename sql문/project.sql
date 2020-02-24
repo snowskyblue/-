@@ -1,4 +1,4 @@
-CREATE TABLE member (
+﻿CREATE TABLE member (
     mb_id              VARCHAR2(20 BYTE),
     mb_name         VARCHAR2(20 BYTE),
     mb_pwd           VARCHAR2(150 BYTE),
@@ -143,16 +143,20 @@ CREATE TABLE QnA (
 );
 
 CREATE TABLE reservation (
-    res_code            NUMBER(20),
-    mb_id                VARCHAR2(20 BYTE),
+    res_code              VARCHAR2(20),
+    mb_id                 VARCHAR2(20 BYTE),
     acm_code            NUMBER(20),
     res_pay_method    VARCHAR2(20 BYTE),
     res_amount          NUMBER(8),
-    res_pay_date        DATE,
+    res_pay_date         DATE,
     res_guest_num       NUMBER(3),
-    res_checkin_date    DATE,
-    res_checkout_date   DATE,
-    res_confirm         CHAR(1),
+    res_checkin_date     VARCHAR2(20),
+    res_checkout_date   VARCHAR2(20),
+    res_confirm            CHAR(1),
+    acm_title	     VARCHAR2(100),
+    acm_address	     varchar2(50),
+    acm_add_detail      varchar2(50),
+    res_card_name       varchar2(20),
     CONSTRAINT reservation_PRIMARY_KEY PRIMARY KEY(res_code),
     CONSTRAINT reservation_FOREIGN_KEY_1 FOREIGN KEY (mb_id) REFERENCES member(mb_id),
     CONSTRAINT reservation_FOREIGN_KEY_2 FOREIGN KEY (acm_code) REFERENCES accommodation(acm_code)
